@@ -27,4 +27,7 @@ public class Room extends BaseEntity<Long>{
     @ManyToMany
     private Set<Material> materials = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "room")
+    private Set<Request> requests = new LinkedHashSet<>();
+
 }

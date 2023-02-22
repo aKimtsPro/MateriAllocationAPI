@@ -12,3 +12,11 @@
     width: 100px;
     border-radius: 4px;
 }
+
+header {
+    margin-bottom: 15px;
+}
+
+.status-btn {
+    width: 100%;
+}

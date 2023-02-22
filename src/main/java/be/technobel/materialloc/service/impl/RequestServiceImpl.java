@@ -1,6 +1,9 @@
 package be.technobel.materialloc.service.impl;
 
+import be.technobel.materialloc.exceptions.NotFoundException;
+import be.technobel.materialloc.exceptions.RequestStatusException;
 import be.technobel.materialloc.models.dto.ReducedRequestDTO;
+import be.technobel.materialloc.models.dto.RequestDTO;
 import be.technobel.materialloc.models.entity.Request;
 import be.technobel.materialloc.models.entity.RequestStatus;
 import be.technobel.materialloc.models.entity.Status;
@@ -12,6 +15,7 @@ import be.technobel.materialloc.repository.RequestRepository;
 import be.technobel.materialloc.service.RequestService;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -65,4 +69,60 @@ public class RequestServiceImpl implements RequestService {
                 .map( ReducedRequestDTO::toDto )
                 .toList();
     }
+
+    @Override
+    public RequestDTO getRequestDetails(Long id) {
+        return requestRepository.findById(id)
+                .map(RequestDTO::toDto)
+                .orElseThrow(() -> new NotFoundException(Request.class, id));
+    }
+
+    @Override
+    public void refuseRequest(Long id, String justification) {
+        Request request = requestRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Request.class, id));
+
+        Status currentStatus = request.getStatusHistory().stream()
+                .max(Comparator.comparing(Status::getCreatedAt))
+                .orElse(null);
+
+
+        if(
+                currentStatus != null &&
+                currentStatus.getStatus() != RequestStatus.PENDING &&
+                currentStatus.getStatus() != RequestStatus.RELOCATING
+        )
+            throw new RequestStatusException();
+
+        Status status = new Status();
+        status.setJustification(justification != null ? justification : "NO JUSTIFICATION");
+        status.setRequest(request);
+        status.setStatus(RequestStatus.REFUSED);
+
+        request.getStatusHistory().add(status);
+        requestRepository.save(request);
+    }
+
+    @Override
+    public void relocateRequest(Long id, String justification) {
+        Request request = requestRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Request.class, id));
+
+        Status currentStatus = request.getStatusHistory().stream()
+                .max(Comparator.comparing(Status::getCreatedAt))
+                .orElse(null);
+
+        if( currentStatus != null && currentStatus.getStatus() != RequestStatus.ACCEPTED )
+            throw new RequestStatusException();
+
+        Status status = new Status();
+        status.setJustification(justification != null ? justification : "NO JUSTIFICATION");
+        status.setRequest(request);
+        status.setStatus(RequestStatus.RELOCATING);
+
+        request.getStatusHistory().add(status);
+        requestRepository.save(request);
+    }
+
+
 }

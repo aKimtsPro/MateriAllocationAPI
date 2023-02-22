@@ -4,6 +4,7 @@ import be.technobel.materialloc.models.entity.RequestStatus;
 import be.technobel.materialloc.models.form.RequestForm;
 import be.technobel.materialloc.service.MaterialService;
 import be.technobel.materialloc.service.RequestService;
+import be.technobel.materialloc.service.RoomService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +17,12 @@ public class RequestController {
 
     private final MaterialService materialService;
     private final RequestService requestService;
+    private final RoomService roomService;
 
-    public RequestController(MaterialService materialService, RequestService requestService) {
+    public RequestController(MaterialService materialService, RequestService requestService, RoomService roomService) {
         this.materialService = materialService;
         this.requestService = requestService;
+        this.roomService = roomService;
     }
 
     @GetMapping("/new")
@@ -51,7 +54,35 @@ public class RequestController {
 
     @GetMapping("/{id:[0-9]+}")
     public String displayRequestDetails(@PathVariable long id, Model model){
+        model.addAttribute("request", requestService.getRequestDetails(id));
         return "request/display-details";
     }
+
+    @GetMapping({
+            "/{id:[0-9]+}/{action:refuse}",
+            "/{id:[0-9]+}/{action:relocate}"
+    })
+    public String displayChangeStatusForm(@ModelAttribute @PathVariable long id, @ModelAttribute @PathVariable String action){
+        return "request/change-status-form";
+    }
+
+    @GetMapping("/{id:[0-9]+}/accept")
+    public String displayAcceptForm(@ModelAttribute @PathVariable long id, Model model){
+        model.addAttribute("rooms", roomService.findCompatibleRoomsForRequest(id));
+        return "request/accept-form";
+    }
+
+    @PostMapping("/{id:[0-9]+}/refuse")
+    public String processRefusalForm( @PathVariable long id, @RequestParam String justification ){
+        requestService.refuseRequest(id, justification);
+        return "redirect:/request/"+id;
+    }
+
+    @PostMapping("/{id:[0-9]+}/relocate")
+    public String processRelocateForm( @PathVariable long id, @RequestParam String justification ){
+        requestService.relocateRequest(id, justification);
+        return "redirect:/request/"+id;
+    }
+
 
 }

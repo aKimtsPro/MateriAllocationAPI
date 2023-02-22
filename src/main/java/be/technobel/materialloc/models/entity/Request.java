@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter
-public class Request {
+public class Request extends BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
