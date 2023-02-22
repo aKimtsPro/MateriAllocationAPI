@@ -1,2 +1,10 @@
-package be.technobel.materialloc.models.entity;public class RequestStatus {
+package be.technobel.materialloc.models.entity;
+
+public enum RequestStatus {
+
+    PENDING,
+    ACCEPTED,
+    REFUSED,
+    RELOCATING
+
 }

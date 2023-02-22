@@ -3,19 +3,57 @@
 
   <th:block th:fragment="content">
 
-    <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
-      </div>
-    </nav>
 
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-    </div>
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" th:class="${active_status} == 'PENDING' ? 'nav-link active' : 'nav-link'" href="/request/PENDING">PENDING</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:class="${active_status} == 'RELOCATING' ? 'nav-link active' : 'nav-link'" href="/request/RELOCATING">RELOCATING</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:class="${active_status} == 'ACCEPTED' ? 'nav-link active' : 'nav-link'" href="/request/ACCEPTED">ACCEPTED</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:class="${active_status} == 'REFUSED' ? 'nav-link active' : 'nav-link'" href="/request/REFUSED">REFUSED</a>
+      </li>
+    </ul>
+
+    <h1 th:text="|${active_status} requests|"></h1>
+
+    <table class="table">
+
+      <thead>
+        <tr>
+          <td>made by</td>
+          <td>Begins at</td>
+          <td>Ends at</td>
+          <td>capacity need</td>
+          <td th:if="${active_status} == 'ACCEPTED'">room</td>
+          <td>actions</td>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr th:each="request : ${requests}" th:object="${request}">
+          <td th:text="*{madeBy}">made by</td>
+          <td th:text="|*{date} *{beginTime}|">Begins at</td>
+          <td th:text="|*{date} *{endTime}|">Ends at</td>
+          <td th:text="*{neededCapacity}">capacity need</td>
+          <td th:if="${active_status} == 'ACCEPTED'"  th:text="*{roomNumber}">room</td>
+          <td class="row-actions">
+
+            <a th:href="@{ /request/{id} (id=*{id})}">
+              <button class="btn btn-primary" type="submit">details</button>
+            </a>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
 
   </th:block>
 
