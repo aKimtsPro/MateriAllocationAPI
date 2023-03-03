@@ -40,6 +40,10 @@ public class Request extends BaseEntity<Long> {
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL)
     private Set<Status> statusHistory = new LinkedHashSet<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "current_status", nullable = false)
+    private RequestStatus currentStatus;
+
     @ManyToMany
     private Set<Material> materials = new LinkedHashSet<>();
 

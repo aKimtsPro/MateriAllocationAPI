@@ -16,12 +16,15 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query("""
         SELECT r
         FROM Room r
-            JOIN Request req ON r.id = req.room.id
-            JOIN Status status ON status.request.id = req.id
+            LEFT JOIN Request req ON r.id = req.room.id
+            JOIN Status status ON req.id = status.request.id
         WHERE
-            r.capacity >= :capacity AND (
-                req.date != :begin_date OR
-                (req.beginTime > :end_time AND req.endTime < :begin_time)
+            r.capacity >= :capacity AND
+            r.capacity <= :capacity * 1.5 AND (
+                    req = null OR
+                    req.currentStatus != 'ACCEPTED' OR
+                    req.date != :begin_date OR
+                    (req.beginTime > :end_time AND req.endTime < :begin_time)
             )
     """)
     List<Room> searchRoomForTeacher(

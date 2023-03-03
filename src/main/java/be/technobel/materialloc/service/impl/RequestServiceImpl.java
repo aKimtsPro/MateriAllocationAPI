@@ -14,7 +14,9 @@ import be.technobel.materialloc.repository.PersonRepository;
 import be.technobel.materialloc.repository.RequestRepository;
 import be.technobel.materialloc.service.RequestService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -100,6 +102,7 @@ public class RequestServiceImpl implements RequestService {
         status.setStatus(RequestStatus.REFUSED);
 
         request.getStatusHistory().add(status);
+        request.setCurrentStatus(RequestStatus.REFUSED);
         requestRepository.save(request);
     }
 
@@ -121,8 +124,27 @@ public class RequestServiceImpl implements RequestService {
         status.setStatus(RequestStatus.RELOCATING);
 
         request.getStatusHistory().add(status);
+        request.setCurrentStatus(RequestStatus.RELOCATING);
         requestRepository.save(request);
     }
 
+    @Override
+    @Transactional
+    public void cleanRequests(){
+        List<Request> toClean = requestRepository.findToCleanBefore(LocalDate.now().plusDays(3));
 
+        toClean.forEach(
+                request -> {
+                    Status status = new Status();
+                    status.setStatus(RequestStatus.REFUSED);
+                    status.setChangedBy(null);
+                    status.setJustification("REQUEST TIMEOUT");
+                    status.setRequest(request);
+                    request.getStatusHistory().add(status);
+                    request.setCurrentStatus(RequestStatus.REFUSED);
+                }
+        );
+
+        requestRepository.saveAll(toClean);
+    }
 }

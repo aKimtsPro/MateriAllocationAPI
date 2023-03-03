@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "request_status")
 @Getter @Setter
 public class Status extends BaseEntity<Long> {
 

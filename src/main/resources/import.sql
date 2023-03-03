@@ -18,20 +18,24 @@ INSERT INTO room (created_at, capacity, room_number, student_access) VALUES (now
 INSERT INTO room (created_at, capacity, room_number, student_access) VALUES (now(), 200, 21, true);
 INSERT INTO room (created_at, capacity, room_number, student_access) VALUES (now(), 200, 26, false);
 
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (1, 4);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (3, 1);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (3, 3);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (4, 1);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (4, 3);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (5, 1);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (5, 3);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (5, 4);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (6, 1);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (6, 3);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (6, 4);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (7, 4);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (8, 1);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (8, 4);
-INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (9, 1);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 1, 4);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 3, 1);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 3, 3);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 4, 1);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 4, 3);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 5, 1);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 5, 3);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 5, 4);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 6, 1);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 6, 3);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 6, 4);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 7, 4);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 8, 1);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 8, 4);
+INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 9, 1);
 INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (10, 1);
 INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (10, 3);
+
+INSERT INTO request(created_at, current_status, "date", begin_time, end_time, justification, needed_capacity, made_by_id) VALUES (now(), 'PENDING','2023-03-05', '09:00:00', '12:00:00', 'because', 20, 3)
+
+INSERT INTO request_status(created_at, changed_by_id, justification, request_status, request_id) VALUES (now(), 1, 'accepted', 'PENDING', 1)

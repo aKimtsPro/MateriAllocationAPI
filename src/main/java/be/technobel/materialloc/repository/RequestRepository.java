@@ -5,6 +5,7 @@ import be.technobel.materialloc.models.entity.RequestStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RequestRepository extends JpaRepository<Request, Long> {
@@ -12,14 +13,18 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     @Query("""
         SELECT r
         FROM Request r
-        WHERE r.date >= now() AND (
-            SELECT s.status
-            FROM Status s
-            WHERE r.id = s.request.id
-            ORDER BY s.createdAt DESC
-            LIMIT 1
-        ) = :status
+        WHERE r.date >= now() AND r.currentStatus = :status
         """)
     List<Request> findFutureWithCurrentStatus(RequestStatus status);
+
+    @Query("""
+        SELECT r
+        FROM Request r
+        WHERE
+            r.date < :limitDate AND
+            r.currentStatus != 'ACCEPTED' AND
+            r.currentStatus != 'REFUSED'
+    """)
+    List<Request> findToCleanBefore(LocalDate limitDate);
 
 }

@@ -18,4 +18,5 @@ public interface RequestService {
 
     void relocateRequest(Long id, String justification);
 
+    void cleanRequests();
 }
