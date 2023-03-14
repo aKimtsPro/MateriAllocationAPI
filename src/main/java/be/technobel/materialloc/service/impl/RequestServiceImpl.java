@@ -7,10 +7,10 @@ import be.technobel.materialloc.models.dto.RequestDTO;
 import be.technobel.materialloc.models.entity.Request;
 import be.technobel.materialloc.models.entity.RequestStatus;
 import be.technobel.materialloc.models.entity.Status;
-import be.technobel.materialloc.models.entity.users.Person;
+import be.technobel.materialloc.models.entity.users.User;
 import be.technobel.materialloc.models.form.RequestForm;
 import be.technobel.materialloc.repository.MaterialRepository;
-import be.technobel.materialloc.repository.PersonRepository;
+import be.technobel.materialloc.repository.UserRepository;
 import be.technobel.materialloc.repository.RequestRepository;
 import be.technobel.materialloc.service.RequestService;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,9 @@ public class RequestServiceImpl implements RequestService {
 
     private final RequestRepository requestRepository;
     private final MaterialRepository materialRepository;
-    private final PersonRepository personRepository;
+    private final UserRepository personRepository;
 
-    public RequestServiceImpl(RequestRepository requestRepository, MaterialRepository materialRepository, PersonRepository personRepository) {
+    public RequestServiceImpl(RequestRepository requestRepository, MaterialRepository materialRepository, UserRepository personRepository) {
         this.requestRepository = requestRepository;
         this.materialRepository = materialRepository;
         this.personRepository = personRepository;
@@ -41,7 +41,7 @@ public class RequestServiceImpl implements RequestService {
         Request request = form.toEntity();
 
         // link user
-        Person p = personRepository.findByLogin(form.getUserLogin())
+        User p = personRepository.findByLogin(form.getUserLogin())
                 .orElseThrow(); // TODO: préciser
 
         if( Objects.equals(p.getRole(), "ADMIN") )
@@ -71,6 +71,7 @@ public class RequestServiceImpl implements RequestService {
                 .map( ReducedRequestDTO::toDto )
                 .toList();
     }
+
 
     @Override
     public RequestDTO getRequestDetails(Long id) {

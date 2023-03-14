@@ -1,13 +1,11 @@
 package be.technobel.materialloc.models.entity;
 
-import be.technobel.materialloc.models.entity.users.Admin;
-import be.technobel.materialloc.models.entity.users.Person;
+import be.technobel.materialloc.models.entity.users.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -49,7 +47,7 @@ public class Request extends BaseEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "made_by_id", nullable = false)
-    private Person madeBy;
+    private User madeBy;
 
     @ManyToOne
     private Room room;

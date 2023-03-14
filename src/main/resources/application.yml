@@ -1,23 +1,9 @@
 spring:
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: materialloc.bot@gmail.com
-    password: qllnzgcjybdpjpqv
-    # Test1234=
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
   datasource:
     url: jdbc:postgresql://localhost:5432/materialloc_db
     username: postgres
     password: pass
     driver-class-name: org.postgresql.Driver
-
   jpa:
     show-sql: true
     hibernate:
@@ -25,13 +11,26 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  # Configuration de l'adresse email envoyant les messages.
+  # Diffère selon les serveurs utilisés. Configuration actuelle pour Gmail
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: materialloc.bot@gmail.com
+    password: qllnzgcjybdpjpqv # Test1234=
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  # lance un script sql au lancement de l'application (après DDL) => initialise les données
   sql:
     init:
       data-locations: classpath:import.sql
-  mvc:
-    format:
-      date: yyyy-MM-dd
 
+
+# permet de débugguer le script sql de lancement
 logging:
   level:
     org:
@@ -40,3 +39,16 @@ logging:
           datasource:
             init: DEBUG
 
+# configuration du chemin de base pour swagger
+springdoc:
+  swagger-ui:
+    path: /swagger
+
+# prop custom pour l'implementation de JWT
+app:
+  security:
+    jwt:
+      expires-at: 900_000
+      prefix: "Bearer "
+      auth-header: "authorization"
+      secret: s#6A8Fb6T?T~{.d6_&.6"8f6X9P6}M@Q #déclarer en tant que var d'environnement est une meilleure idée

@@ -2,9 +2,11 @@ package be.technobel.materialloc.exceptions;
 
 import be.technobel.materialloc.models.entity.BaseEntity;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Getter
-public class NotFoundException extends RuntimeException {
+public class NotFoundException extends ResponseStatusException {
 
     private final Class<? extends BaseEntity<?>> ressourceType;
     private final Object id;
@@ -18,7 +20,7 @@ public class NotFoundException extends RuntimeException {
     }
 
     protected NotFoundException(String message, Class<? extends BaseEntity<?>> ressourceType, Object id){
-        super(message);
+        super(HttpStatus.NOT_FOUND, message);
         this.ressourceType = ressourceType;
         this.id = id;
     }

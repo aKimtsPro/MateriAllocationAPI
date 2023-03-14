@@ -12,6 +12,7 @@ public interface RequestService {
     void create(RequestForm form);
 
     List<ReducedRequestDTO> getFutureWithStatus(RequestStatus status);
+
     RequestDTO getRequestDetails(Long id);
 
     void refuseRequest(Long id, String justification);

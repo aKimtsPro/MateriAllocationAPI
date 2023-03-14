@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("ADMIN")
 @Getter @Setter
-public class Admin extends Person {
+public class Admin extends User {
 
     @Override
     public void prePersist() {

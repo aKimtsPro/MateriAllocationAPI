@@ -22,7 +22,7 @@ public class RequestManagementTasks {
     }
 
     @Async
-    @Scheduled(cron = "0 0 4 * * *")
+    @Scheduled(cron = "0 0 4 * * *") //Tous les ans, tous les mois, tous les jours à 04:00:00
     public void cleanNonAcceptedTasks(){
         log.info("scheduled task -- cleaning requests");
         requestService.cleanRequests();

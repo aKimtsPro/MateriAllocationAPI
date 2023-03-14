@@ -31,7 +31,7 @@ public class TestEmailSenderController {
         helper.setSubject("test email sender");
 
         Context ctxt = new Context();
-        String html = templateEngine.process("index.html", ctxt);
+        String html = templateEngine.process("email.template.html", ctxt);
 
         helper.setText(html, true);
         helper.setFrom("materialloc.bot@gmail.com");

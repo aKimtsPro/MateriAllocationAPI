@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("TEACHER")
-public class Teacher extends Person {
+public class Teacher extends User {
 
     @Override
     public void prePersist() {

@@ -1,6 +1,6 @@
 package be.technobel.materialloc.models.dto;
 
-import be.technobel.materialloc.models.entity.users.Person;
+import be.technobel.materialloc.models.entity.users.User;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,7 +15,7 @@ public class PersonDTO implements Serializable {
     private final String email;
 
 
-    public static PersonDTO toDto(Person entity) {
+    public static PersonDTO toDto(User entity) {
         if( entity == null )
             return null;
 
