@@ -81,6 +81,10 @@ If you're using the dockerhub hosted image or did not replace the reference to e
 
 ## Run with docker-compose
 
+The docker structure:
+
+![alt text](./materialloc_stuct.PNG)
+
 Alternatively, set them in the docker-compose.yml. If you do, be sure to have consistency with the postgres environnement.</br>
 
 To do so, create a api.env file and a db.env file at the same level as your `docker-compose.yml` and setup values for these variables:
