@@ -46,10 +46,7 @@ public class MaxTimeValidator implements ConstraintValidator<MaxTime, Temporal> 
     }
 
     private LocalTime toLocalTime(Temporal value){
-        /*
-         * ATTENTION: pattern matching : feature en preview de java 17.
-         * Peut ne plus exister par la suite (même si ce serait étonnant)
-         */
+
         if( value instanceof LocalTime )
             return  (LocalTime) value;
         else if (value instanceof LocalDateTime)

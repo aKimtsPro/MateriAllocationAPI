@@ -1,0 +1,42 @@
+version: "3.9"
+networks:
+  backend:
+
+services:
+  materialloc_api:
+    container_name: "materialloc_api"
+    image: "akimtspro/materialloc_api:0.0.1"
+    expose:
+      - "8080"
+    ports:
+      - "8282:8080"
+    env_file:
+      - api.env
+#    environment:
+#      - POSTGRES_HOST=materialloc_db
+#      - POSTGRES_PORT=5432
+#      - POSTGRES_DB=materialloc_db
+#      - POSTGRES_USERNAME=postgres
+#      - POSTGRES_PASSWORD=pass
+#      - EMAIL_ADDRESS=materialloc.bot@gmail.com
+#      - EMAIL_PASSWORD=qllnzgcjybdpjpqv
+#      - JWT_SECRET=s#6A8Fb6T?T~{.d6_&.6"8f6X9P6}M@Q
+    networks:
+      - backend
+    depends_on:
+      - materialloc_db
+  materialloc_db:
+    container_name: materialloc_db
+    image: postgres
+    expose:
+      - "5432"
+    ports:
+      - "5435:5432"
+    env_file:
+      - db.env
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=pass
+#      - POSTGRES_DB=materialloc_db
+    networks:
+      - backend

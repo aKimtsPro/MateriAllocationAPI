@@ -6,5 +6,6 @@ import be.technobel.materialloc.models.form.LoginForm;
 public interface AuthService {
 
     AuthDTO login(LoginForm form);
+    AuthDTO refreshJWT(String refreshToken);
 
 }

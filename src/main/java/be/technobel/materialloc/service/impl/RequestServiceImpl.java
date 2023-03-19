@@ -42,10 +42,10 @@ public class RequestServiceImpl implements RequestService {
 
         // link user
         User p = personRepository.findByLogin(form.getUserLogin())
-                .orElseThrow(); // TODO: préciser
+                .orElseThrow( () -> new NotFoundException(User.class, form.getUserLogin()) );
 
         if( Objects.equals(p.getRole(), "ADMIN") )
-            throw new RuntimeException(); // TODO: préciser
+            throw new RuntimeException("Shouldn't be ADMIN");
 
         request.setMadeBy( p );
 

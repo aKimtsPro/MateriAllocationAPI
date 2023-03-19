@@ -20,6 +20,7 @@ public abstract class BaseEntity<TID> {
     @Column(name = "last_modified_at", insertable = false)
     private LocalDateTime lastModifiedAt;
 
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();

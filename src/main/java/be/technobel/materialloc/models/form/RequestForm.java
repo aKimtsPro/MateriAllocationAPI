@@ -29,9 +29,9 @@ public class RequestForm {
     private Integer neededCapacity;
     @MinFuture(amount = 3, unit = ChronoUnit.DAYS)
     private LocalDate date;
-    @MinTime(h=8, m=30)
+    @MinTime(h=8)
     private LocalTime beginAt;
-    @MaxTime(h=20)
+    @MaxTime(h=18)
     private LocalTime endAt;
     private List<Long> materialIds;
     private String additionalNotes;
@@ -43,6 +43,7 @@ public class RequestForm {
      * @return a Request entity
      */
     public Request toEntity(){
+
         Request request = new Request();
 
         request.setDate(this.date);
@@ -53,6 +54,7 @@ public class RequestForm {
         request.setAdditionalNotes(this.additionalNotes);
 
         return request;
+
     }
 
 }

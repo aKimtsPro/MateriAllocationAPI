@@ -1,8 +1,9 @@
 spring:
+  # configuration de la datasource
   datasource:
-    url: jdbc:postgresql://localhost:5432/materialloc_db
-    username: postgres
-    password: pass
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
@@ -16,8 +17,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: materialloc.bot@gmail.com
-    password: qllnzgcjybdpjpqv # Test1234=
+    username: ${EMAIL_ADDRESS}
+    password: ${EMAIL_PASSWORD} # Test1234=
     properties:
       mail:
         smtp:
@@ -48,7 +49,7 @@ springdoc:
 app:
   security:
     jwt:
-      expires-at: 900_000
+      expires-at: 900_000 # 15 min
       prefix: "Bearer "
       auth-header: "authorization"
-      secret: s#6A8Fb6T?T~{.d6_&.6"8f6X9P6}M@Q #déclarer en tant que var d'environnement est une meilleure idée
+      secret: ${JWT_SECRET} #déclarer en tant que var d'environnement est une meilleure idée
