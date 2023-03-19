@@ -2,8 +2,12 @@
 
 ## Run project locally:
 
+Run the `run_dev` batch file
+
+OR
+
 In the `application.yml` file of the project, replace the references to 
-environnement variables with values that work for your local environnement.
+environnement variables with values that work for your local environnement (connection postgres).
 
 You can the run the project as you wish.
 
