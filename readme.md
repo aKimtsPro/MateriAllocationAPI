@@ -5,16 +5,21 @@
 In the `application.yml` file of the project, replace the references to 
 environnement variables with values that work for your local environnement.
 
+You can the run the project as you wish.
+
 ## Recreate image locally:
 
 
-Run the following command 
 
-    docker build -t <your-image-name>:<tag> .
+Run the following commands
+
+1) package the app: `mvn clean install -DskipTests -f pom.xml`
+
+2) to create the image: `docker build -t <your-image-name>:<tag> .`
 
 Then follow the steps in `Run the materialloc_api image:` section
 
-You might also want to replace the references to environnement variable
+Before packaging the app, you might also want to replace the references to environnement variable
 in the `application.yml` of the app with value that work in your local environnement.
 If you do, there is no need to setup environnement variable in the next section.
 
@@ -28,7 +33,7 @@ If you recreate the image:
 
     docker run [-env ...] <your-image-name>:<tag>
 
-the following environnement variable must be setup:
+If you're using the dockerhub hosted image or did not replace the reference to environnement variables in the `application.yml`, the following environnement variable must be setup:
 <dl>
     <dt>
         <p><strong>POSTGRES_HOST:</strong></p>
