@@ -87,7 +87,7 @@ If you're using the dockerhub hosted image or did not replace the reference to e
 
 The docker structure:
 
-![alt text](./materialloc_stuct.PNG)
+![alt text](materialloc_stuct.PNG)
 
 Alternatively, set them in the docker-compose.yml. If you do, be sure to have consistency with the postgres environnement.</br>
 
