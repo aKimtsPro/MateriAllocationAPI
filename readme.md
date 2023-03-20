@@ -77,10 +77,16 @@ If you're using the dockerhub hosted image or did not replace the reference to e
         <p>the gmail email address that will send the emails for your app</p>        
     </dd>
     <dt>
-        <p><strong>EMAIL_PASSWORD:</strong></p>
+        <p><strong>JWT_SECRET:</strong></p>
     </dt>
     <dd>
-        <p>the password for the gmail email address that will send the emails for your app</p>        
+        <p>The secret for the signature of the access token</p>        
+    </dd>
+    <dt>
+        <p><strong>JWT_REFRESH_SECRET:</strong></p>
+    </dt>
+    <dd>
+        <p>The secret for the signature of the refresh token</p>        
     </dd>
 </dl>
 

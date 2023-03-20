@@ -28,14 +28,21 @@ public class JwtProvider {
         this.userDetailsService = userDetailsService;
     }
 
-    public String generateToken(Authentication auth){
-
+    public String generateAccessToken(Authentication auth){
         return jwtProperties.getPrefix() + JWT.create()
-                .withExpiresAt( Instant.now().plusMillis(jwtProperties.getExpiresAt()) )
+                .withExpiresAt( Instant.now().plusMillis(jwtProperties.getAccessExpiresAt()) )
                 .withSubject(auth.getName())
                 .withClaim("role", auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst().orElse(null))
-                .sign( Algorithm.HMAC512(jwtProperties.getSecret()) );
+                .sign( Algorithm.HMAC512(jwtProperties.getAccessSecret()) );
 
+    }
+
+    public String generateRefreshToken(Authentication auth){
+        return jwtProperties.getPrefix() + JWT.create()
+                .withExpiresAt( Instant.now().plusMillis(jwtProperties.getAccessExpiresAt()) )
+                .withIssuedAt(  Instant.now() )
+                .withSubject(   auth.getName() )
+                .sign( Algorithm.HMAC512(jwtProperties.getRefreshSecret()) );
     }
 
 
@@ -48,13 +55,13 @@ public class JwtProvider {
         return authHeader.replaceFirst(jwtProperties.getPrefix(), "" );
     }
 
-    public boolean validateToken(String token){
+    public boolean validateAccessToken(String token){
 
         try {
             // 1, Le bon secret a été utilisé (et le meme algo)
             // 2, pas expiré
-            DecodedJWT jwt = JWT.require( Algorithm.HMAC512(jwtProperties.getSecret()) )
-                    .acceptExpiresAt( jwtProperties.getExpiresAt() )
+            DecodedJWT jwt = JWT.require( Algorithm.HMAC512(jwtProperties.getAccessSecret()) )
+                    .acceptExpiresAt( jwtProperties.getAccessExpiresAt() )
                     .withClaimPresence("sub")
                     .withClaimPresence("role")
                     .build()
@@ -76,6 +83,22 @@ public class JwtProvider {
 
     }
 
+    public boolean validateRefreshToken(String token){
+        try {
+            JWT.require( Algorithm.HMAC512(jwtProperties.getRefreshSecret()) )
+                    .acceptExpiresAt( jwtProperties.getRefreshExpiresAt() )
+                    .withClaimPresence("sub")
+                    .withClaimPresence("iat")
+                    .build()
+                    .verify( token );
+
+            return true;
+        }
+        catch (JWTVerificationException | UsernameNotFoundException ex ){
+            return false;
+        }
+    }
+
     public Authentication createAuthentication(String token){
         DecodedJWT jwt = JWT.decode(token);
 
@@ -89,4 +112,5 @@ public class JwtProvider {
                 userDetails.getAuthorities()
         );
     }
+
 }

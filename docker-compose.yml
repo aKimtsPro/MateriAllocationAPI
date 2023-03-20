@@ -22,6 +22,7 @@ services:
 #      - EMAIL_ADDRESS=materialloc.bot@gmail.com
 #      - EMAIL_PASSWORD=qllnzgcjybdpjpqv
 #      - JWT_SECRET=s#6A8Fb6T?T~{.d6_&.6"8f6X9P6}M@Q
+#      - JWT_REFRESH_SECRET=s#6A8Fb6T?T~{.d6_&.6"8f6X9P6}M@Q
     networks:
       - backend
     depends_on:

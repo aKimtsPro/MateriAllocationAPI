@@ -52,7 +52,9 @@ springdoc:
 app:
   security:
     jwt:
-      expires-at: 900_000 # 15 min
+      access-expires-at: 900_000 # 15 min
+      refresh-expires-at: 2_592_000_000 # 30 j
       prefix: "Bearer "
       auth-header: "authorization"
-      secret: ${JWT_SECRET}
+      access-secret: ${JWT_SECRET}
+      refresh-secret: ${JWT_REFRESH_SECRET}

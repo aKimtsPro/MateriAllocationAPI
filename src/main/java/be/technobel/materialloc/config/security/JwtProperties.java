@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("app.security.jwt")
 public class JwtProperties {
 
-    private String secret;
+    private String accessSecret;
+    private String refreshSecret;
     private String prefix;
     private String authHeader;
-    private long expiresAt;
+    private long accessExpiresAt;
+    private long refreshExpiresAt;
 
 }
