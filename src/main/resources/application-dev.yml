@@ -34,7 +34,7 @@ spring:
       data-locations: classpath:import.sql
 
 
-# permet de débugguer le script sql de lancement
+# permet de debugguer le script sql de lancement
 logging:
   level:
     org:

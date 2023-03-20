@@ -40,10 +40,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
     private String email;
     private String phone;
     private Address address;
-    @Column(name = "refresh-token", nullable = true)
-    private UUID refreshToken;
-    @Column(name = "refresh-token-created-at", nullable = true)
-    private LocalDateTime refreshTokenCreatedAt;
+
     private boolean enabled = true;
 
     @Override

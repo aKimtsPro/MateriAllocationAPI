@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,12 +28,12 @@ public class JwtProvider {
         this.userDetailsService = userDetailsService;
     }
 
-    public String generateToken(String username, String role){
+    public String generateToken(Authentication auth){
 
         return jwtProperties.getPrefix() + JWT.create()
                 .withExpiresAt( Instant.now().plusMillis(jwtProperties.getExpiresAt()) )
-                .withSubject(username)
-                .withClaim("role", role)
+                .withSubject(auth.getName())
+                .withClaim("role", auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst().orElse(null))
                 .sign( Algorithm.HMAC512(jwtProperties.getSecret()) );
 
     }

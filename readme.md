@@ -2,7 +2,8 @@
 
 ## Run project locally:
 
-Run the `run_dev` batch file
+Clone the project.
+Run the `run_dev` batch file.
 
 OR
 
