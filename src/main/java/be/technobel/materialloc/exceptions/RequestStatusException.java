@@ -1,8 +1,11 @@
 package be.technobel.materialloc.exceptions;
 
-public class RequestStatusException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+public class RequestStatusException extends ResponseStatusException {
 
     public RequestStatusException() {
-        super("Cant change status this way");
+        super(HttpStatus.BAD_REQUEST,"invalid request status");
     }
 }

@@ -1,17 +1,12 @@
 package be.technobel.materialloc.models.dto;
 
 import be.technobel.materialloc.models.entity.Request;
-import be.technobel.materialloc.models.entity.Status;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 public class RequestDTO implements Serializable {
@@ -25,6 +20,7 @@ public class RequestDTO implements Serializable {
     private final List<StatusDTO> statusHistory;
     private final String currentStatus;
     private final PersonDTO madeBy;
+    private final List<MaterialDTO> neededMaterials;
     private final RoomDTO room;
 
     public static RequestDTO toDto(Request entity){
@@ -51,9 +47,9 @@ public class RequestDTO implements Serializable {
                 statusHistory,
                 currentStatus,
                 PersonDTO.toDto(entity.getMadeBy()),
+                entity.getMaterials().stream().map(MaterialDTO::from).toList(),
                 RoomDTO.toDto(entity.getRoom())
         );
-
 
     }
 

@@ -36,6 +36,6 @@ INSERT INTO room_materials (room_room_id, materials_material_id) VALUES ( 9, 1);
 INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (10, 1);
 INSERT INTO room_materials (room_room_id, materials_material_id) VALUES (10, 3);
 
-INSERT INTO request(created_at, current_status, "date", begin_time, end_time, justification, needed_capacity, made_by_id) VALUES (now(), 'PENDING','2023-03-05', '09:00:00', '12:00:00', 'because', 20, 3)
+INSERT INTO request(created_at, current_status, "date", begin_time, end_time, justification, needed_capacity, made_by_id) VALUES (now(), 'PENDING','2023-05-05', '09:00:00', '12:00:00', 'because', 20, 3)
 
 INSERT INTO request_status(created_at, changed_by_id, justification, request_status, request_id) VALUES (now(), 1, 'accepted', 'PENDING', 1)

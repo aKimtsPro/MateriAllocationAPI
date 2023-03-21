@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class ReducedRequestDTO implements Serializable {
@@ -22,6 +22,7 @@ public class ReducedRequestDTO implements Serializable {
     private final RequestStatus currentStatus;
     private final String madeBy;
     private final Integer roomNumber;
+    private final List<MaterialDTO> materials;
 
     public static ReducedRequestDTO toDto(Request entity){
 
@@ -39,7 +40,8 @@ public class ReducedRequestDTO implements Serializable {
                         .map(Status::getStatus)
                         .orElse(null),
                 entity.getMadeBy().getFirstName() + ' ' + entity.getMadeBy().getLastName().toUpperCase(),
-                entity.getRoom() == null ? null : entity.getRoom().getNumber()
+                entity.getRoom() == null ? null : entity.getRoom().getNumber(),
+                entity.getMaterials().stream().map(MaterialDTO::from).toList()
         );
 
     }

@@ -18,6 +18,7 @@ public interface RequestService {
     void refuseRequest(Long id, String justification);
 
     void relocateRequest(Long id, String justification);
+    void acceptRequest(Long id, String justification, long roomId);
 
     void cleanRequests();
 }

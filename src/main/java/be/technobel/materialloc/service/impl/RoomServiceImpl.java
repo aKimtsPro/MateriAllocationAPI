@@ -29,7 +29,7 @@ public class RoomServiceImpl implements RoomService {
         Request request = requestRepository.findById(requestId)
                 .orElseThrow( () -> new NotFoundException(Request.class, requestId));
 
-        String madeByRole = request.getMadeBy().getRole();
+//        String madeByRole = request.getMadeBy().getRole();
 
         List<Room> potentialRooms = roomRepository.searchRoomForTeacher(
                         request.getNeededCapacity(),
@@ -38,10 +38,11 @@ public class RoomServiceImpl implements RoomService {
                         request.getEndTime()
                 );
 
+        System.out.println("rooms:" + potentialRooms);
+
         return potentialRooms.stream()
                 .filter(
-                        room -> room.getMaterials()
-                                .containsAll(request.getMaterials())
+                        room -> room.getMaterials().containsAll(request.getMaterials())
                 )
                 .map( RoomDTO :: toDto )
                 .toList();

@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class ControllerAdvisor {
 
-
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidRefreshTokenException.class)
-    public void handle(){
-    }
+    public void handleForbidden(){}
+
 }

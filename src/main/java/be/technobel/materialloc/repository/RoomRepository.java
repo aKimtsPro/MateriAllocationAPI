@@ -17,7 +17,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
         SELECT r
         FROM Room r
             LEFT JOIN Request req ON r.id = req.room.id
-            JOIN Status status ON req.id = status.request.id
         WHERE
             r.capacity >= :capacity AND
             r.capacity <= :capacity * 1.5 AND (
