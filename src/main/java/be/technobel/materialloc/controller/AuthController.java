@@ -6,6 +6,7 @@ import be.technobel.materialloc.service.AuthService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/auth")
 public class AuthController {
 
