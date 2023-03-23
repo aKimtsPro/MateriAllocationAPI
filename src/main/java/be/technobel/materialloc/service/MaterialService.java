@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface MaterialService {
 
-    @PreAuthorize("isAuthenticated()")
     List<MaterialDTO> getAll();
 
 }
