@@ -49,9 +49,7 @@ public class RoomServiceImpl implements RoomService {
         System.out.println("rooms:" + potentialRooms);
 
         return potentialRooms.stream()
-                .filter(
-                        room -> room.getMaterials().containsAll(request.getMaterials())
-                )
+                .filter( room -> room.getMaterials().containsAll(request.getMaterials()) )
                 .map( RoomDTO :: toDto )
                 .toList();
     }
